@@ -23,6 +23,124 @@ La demo incluye 3 productos con variantes de talla y color, carrito de compras, 
 - **Enhanced Ecommerce** completo en GA4
 - **Custom dimensions** para variantes de producto
 
+## 📊 Google Tag Manager - Implementación de Eventos E-commerce
+
+### Eventos Implementados
+
+#### 🔍 View Item
+Rastrea automáticamente cuando un usuario visualiza una página de producto individual (`/product/*`), proporcionando métricas de engagement por producto.
+
+#### 👆 Select Item  
+Captura las interacciones deliberadas del usuario con productos desde la página de listado (`/products`), diferenciando entre:
+- **Clics en imagen del producto** (`interaction_source: product_image`)
+- **Clics en botón "View Product"** (`interaction_source: view_button`)
+
+### 🔧 Elementos HTML Trackeados
+
+#### Elementos en la página `/products`:
+
+**🖼️ Imagen del producto:**
+```html
+<img class="product-image" alt="product-image-T-Shirt" src="assets/images/t-shirt.jpg">
+```
+
+**🔘 Botón "View Product":**
+```html
+<a class="btn" href="/product/tshirt">View Product</a>
+```
+
+#### Selectores utilizados:
+- **Clase CSS**: `product-image` (para clics en imagen)
+- **Clase CSS**: `btn` (para clics en botón)
+- **Texto**: "View Product" (identificación de botón)
+
+> 💡 **Flujo**: Clic en `/products` → Evento `select_item` → Navegación a `/product/*` → Evento `view_item`
+
+### Configuración Técnica
+
+#### Variables de Capa de Datos
+- `ecommerce.currency` - Moneda del producto (GBP)
+- `ecommerce.value` - Valor/precio del producto  
+- `ecommerce.items.0.item_name` - Nombre del producto
+- `Click Source` - Variable personalizada que identifica el origen del clic
+
+#### Activadores Configurados
+- **Custom Event - View Item**: Se dispara con evento `view_item` del dataLayer
+- **Click - Product Image**: Detecta clics en elementos con clase `product-image`
+- **Click - View Product Button**: Detecta clics en botones con texto "View Product"
+
+#### Estructura de Datos
+```javascript
+{
+  event: 'view_item',
+  ecommerce: {
+    currency: 'GBP',
+    value: 150,
+    items: [{
+      item_id: 'blazer_red_m',
+      item_name: 'Blazer',
+      price: 150,
+      quantity: 1,
+      item_variant: 'blazer#red#m'
+    }]
+  }
+}
+```
+
+### Métricas y Análisis Disponibles
+
+✅ **Productos más visualizados** - Frecuencia de eventos `view_item`  
+✅ **Productos que generan mayor interés** - Frecuencia de eventos `select_item`  
+✅ **Método de acceso preferido** - Análisis del parámetro `interaction_source`  
+✅ **Tasa de conversión lista → visualización** - Ratio `select_item` vs `view_item`  
+✅ **Patrones de navegación** - Secuencia de eventos por sesión de usuario
+
+### Verificación
+
+Los eventos pueden verificarse en:
+- **GTM Preview Mode**: Para depuración en tiempo real
+- **GA4 Informes en Tiempo Real**: Para validar llegada de datos
+- **Console del navegador**: Inspección directa del `dataLayer`
+
+## 🛒 Fase 2: Implementación de Funnel de E-commerce Completo
+
+Esta segunda fase completa el tracking del funnel de conversión e-commerce implementando los eventos críticos del proceso de compra: **Add to Cart**, **View Cart** y **Purchase**.
+
+### Configuración Implementada
+
+**Variables de DataLayer:**
+- `ecommerce.transaction_id` - ID único de transacción
+- `ecommerce.items.0.item_id` - Identificador de producto
+- `ecommerce.items.0.item_variant` - Variante del producto
+- `ecommerce.items.0.quantity` - Cantidad de productos
+
+**Activadores:**
+- `Custom Event - Add to Cart` - Se dispara al añadir productos al carrito
+- `Custom Event - View Cart` - Se activa al visualizar el carrito
+- `Custom Event - Purchase` - Se ejecuta al completar una compra
+- `Page View - Thank You Page` - Activador de respaldo para compras
+
+**Etiquetas GA4:**
+- `GA4 - Add to Cart` - Rastrea productos añadidos al carrito
+- `GA4 - View Cart` - Mide engagement con el contenido del carrito
+- `GA4 - Purchase` - Registra conversiones con transaction_id único
+
+### Flujo de Testing
+
+1. **Add to Cart**: Navegar a página de producto → Clic "Add to Basket" → Verificar evento en GTM Preview
+2. **View Cart**: Añadir producto → Ir a `/basket` → Confirmar disparo automático del evento
+3. **Purchase**: Completar compra (directa o desde carrito) → Validar transaction_id único en `/thank-you`
+
+### Métricas Disponibles
+
+- Funnel de conversión completo (view_item → add_to_cart → view_cart → purchase)
+- Tasa de abandono del carrito
+- Average Order Value (AOV)
+- Revenue tracking con IDs únicos
+- Análisis de comportamiento de compra (directa vs carrito)
+
+> **Ventaja clave**: Los eventos de e-commerce están pre-implementados en el dataLayer, permitiendo una configuración robusta sin depender de tracking de clics complejos.
+
 ## 🚀 Tecnologías
 
 - **Frontend:** Angular
@@ -99,3 +217,5 @@ Sigue la documentación paso a paso en la carpeta `/docs/`:
 **Desarrollado por:** [Barbara Gamarra](https://github.com/BarbaraGamarra)  
 **Proyecto:** Certificación Google Analytics & Tag Manager  
 **Fecha:** Junio 2025
+
+> 💡 **Nota**: La implementación utiliza Enhanced Ecommerce de GA4 y sigue las mejores prácticas de medición de comercio electrónico.
