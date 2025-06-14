@@ -198,7 +198,7 @@ Para el evento automático `view_item`:
 
 Este activador se dispara automáticamente cuando se detecta el evento `view_item` en el dataLayer, proporcionando una activación más precisa que depende directamente de los datos estructurados de e-commerce en lugar de la URL de la página.
 
-![Page View Trigger](screenshots/gtm/trigger-view_item.png) ***captura pentiende***
+![View Item Trigger](screenshots/gtm/trigger-view_item.png)
 
 #### Activador: Click - Product Image
 
