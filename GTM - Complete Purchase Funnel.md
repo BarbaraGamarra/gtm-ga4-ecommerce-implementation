@@ -1,5 +1,3 @@
-TEST 
-
 # GTM - Implementación de Funnel de E-commerce Completo
 
 ## Configuración de eventos del funnel de compra
@@ -237,8 +235,6 @@ Activador principal para las compras, que se dispara cuando el dataLayer recibe 
 
 Este activador funciona como respaldo para el evento purchase. Si por algún motivo el evento personalizado no se dispara, garantizamos el tracking de la compra mediante la carga de la página de confirmación.
 
-![Trigger Thank You Page](screenshots/gtm/trigger-thank-you-page.png)
-
 ### Etiquetas GA4
 
 #### Etiqueta: GA4 - Add to Cart
@@ -304,9 +300,6 @@ Esta configuración permite trackear el contenido completo del carrito, incluyen
 
 El parámetro `transaction_id` es fundamental para evitar contabilizar la misma compra múltiples veces.
 
-![Tag Purchase](screenshots/gtm/tag-purchase.png)
-
-
 
 ## Testing y validación
 
@@ -316,7 +309,6 @@ El parámetro `transaction_id` es fundamental para evitar contabilizar la misma 
 2. URL de prueba: `https://gtm-ecommerce-demo.ew.r.appspot.com/`
 3. Hacer clic en **"Connect"**
 
-![GTM Preview Setup](screenshots/gtm/gtm-preview-setup-funnel.png)
 
 ### Escenarios de prueba
 
